@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>For Maddamji 🎂</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #fff0f5;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            text-align: center;
+            overflow: hidden;
+        }
+
+        .page {
+            display: none;
+            flex-direction: column;
+            align-items: center;
+            width: 90%;
+            max-width: 500px;
+            animation: fadeIn 0.8s ease-in-out;
+        }
+
+        .active { display: flex; }
+
+        button {
+            padding: 15px 35px;
+            font-size: 1.1rem;
+            background-color: #ff4d94;
+            color: white;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            margin-top: 20px;
+            box-shadow: 0 4px 15px rgba(255, 77, 148, 0.4);
+            transition: transform 0.2s;
+            z-index: 100;
+        }
+
+        button:active { transform: scale(0.95); }
+
+        /* Balloon Animation */
+        .balloon {
+            font-size: 50px;
+            position: absolute;
+            bottom: -100px;
+            animation: flyUp 4s linear forwards;
+            pointer-events: none;
+        }
+
+        @keyframes flyUp {
+            0% { transform: translateY(0) translateX(0); opacity: 1; }
+            25% { transform: translateY(-30vh) translateX(30px); }
+            50% { transform: translateY(-60vh) translateX(-30px); }
+            75% { transform: translateY(-90vh) translateX(30px); }
+            100% { transform: translateY(-120vh) translateX(0); opacity: 0; }
+        }
+
+        /* Cake & Candle */
+        .cake { font-size: 100px; margin: 20px; cursor: default; }
+        .candle { font-size: 50px; transition: opacity 0.3s ease; }
+        .blown { opacity: 0.1; filter: grayscale(1) blur(1px); }
+
+        /* Photo Grid */
+        .photo-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 12px;
+            margin: 20px 0;
+        }
+        .photo-grid img {
+            width: 140px;
+            height: 140px;
+            object-fit: cover;
+            border: 5px solid white;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        /* Final Message Card */
+        .card {
+            background: white;
+            padding: 30px;
+            border-radius: 25px;
+            box-shadow: 0 15px 35px rgba(0,0,0,0.1);
+            position: relative;
+            line-height: 1.6;
+            color: #333;
+            border: 2px solid #ffe4e1;
+        }
+        .bouquet {
+            position: absolute;
+            bottom: -15px;
+            right: -15px;
+            font-size: 60px;
+            filter: drop-shadow(2px 2px 5px rgba(0,0,0,0.2));
+        }
+
+        h1 { color: #d02060; }
+        @keyframes fadeIn { from { opacity: 0; transform: scale(0.9); } to { opacity: 1; transform: scale(1); } }
+    </style>
+</head>
+<body>
+
+    <div id="page1" class="page active">
+        <h1>Hey Maddamji, it's your special day! ✨💖🎉</h1>
+        <button onclick="startBalloons()">Fly the Balloons 🎈</button>
+    </div>
+
+    <div id="page2" class="page">
+        <div class="cake">🎂</div>
+        <div id="candle" class="candle">🕯️</div>
+        <button id="blowBtn" onclick="blowCandle()">Blow the candle</button>
+    </div>
+
+    <div id="page3" class="page">
+        <h2 style="color: #ff4d94;">Beautiful Memories 🌸</h2>
+        <div class="photo-grid">
+            <img src="snehal pic one copy.jpg" alt="Memory 1">
+            <img src="snehal pic two.jpg" alt="Memory 2">
+            <img src="snehal pic three.jpg" alt="Memory 3">
+            <img src="snehal pic four copy.jpg" alt="Memory 4">
+        </div>
+        <button onclick="nextPage('page4')">Read My Message ❤️</button>
+    </div>
+
+    <div id="page4" class="page">
+        <div class="card">
+            <p><strong>Heyyy! A very, very, veryyy happiest birthday, Dumboooo 🥰🎉🎂</strong></p>
+            <p>You are one of my closest people. I don’t know about you… but for me, you are truly one of the dearest 💖</p>
+            <p>And you’ll always be. On your special day, may God bless you with lots of success 🌟, endless happiness 😊, and a lots of joy 💫</p>
+            <p>May your year be filled with cheerful moments, beautiful smiles, and blooming dreams 🌸✨</p>
+            <p>You will always hold a very special place in my life 💞</p>
+            <p>Once again…</p>
+            <p><strong>A veryyy, veryyy HAPPY BIRTHDAY, Sugarpunch 💕🎈🎂</strong></p>
+            <div class="bouquet">💐</div>
+        </div>
+        <audio id="bdaySong" src="song.mp3.mp3" loop></audio>
+    </div>
+
+    <script>
+        function nextPage(pageId) {
+            document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+            document.getElementById(pageId).classList.add('active');
+            
+            // Start song on the final message page
+            if(pageId === 'page4') {
+                const song = document.getElementById('bdaySong');
+                song.play().catch(e => console.log("Audio needs user interaction first"));
+            }
+        }
+
+        function startBalloons() {
+            for (let i = 0; i < 15; i++) {
+                setTimeout(() => {
+                    const b = document.createElement('div');
+                    b.className = 'balloon';
+                    b.innerText = '🎈';
+                    b.style.left = Math.random() * 90 + 'vw';
+                    // Randomize balloon colors
+                    b.style.filter = `hue-rotate(${Math.random() * 360}deg)`;
+                    document.body.appendChild(b);
+                    
+                    // Remove balloon after animation finishes
+                    setTimeout(() => b.remove(), 4000);
+                }, i * 150);
+            }
+
+            // Automatically go to next page after balloons start
+            setTimeout(() => {
+                nextPage('page2');
+            }, 3000);
+        }
+
+        function blowCandle() {
+            document.getElementById('candle').classList.add('blown');
+            // 0.3 second delay as requested
+            setTimeout(() => {
+                nextPage('page3');
+            }, 300);
+        }
+    </script>
+</body>
+</html>
